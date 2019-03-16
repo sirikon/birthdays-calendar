@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: birthdays-calendar
-        image: sirikon/birthdays-calendar:${VERSION}
+        image: sirikon/birthdays-calendar:${CIRCLE_BUILD_NUM}
         ports:
         - containerPort: 80
         env:
