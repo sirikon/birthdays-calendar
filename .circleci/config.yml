@@ -16,3 +16,16 @@ jobs:
       - run:
           name: Push Docker image
           command: docker-compose -f docker-compose.ci.yml push
+
+      - run:
+          name: Authenticate with Kubernetes Cluster
+          command: |
+            kubectl config set-cluster k8s --server=$KUBE_SERVER
+            kubectl config set clusters.k8s.certificate-authority-data $KUBE_CA
+            kubectl config set-credentials k8s --token=$KUBE_TOKEN
+            kubectl config set-context k8s --cluster=k8s --user=k8s
+            kubectl config use-context k8s
+      
+      - run:
+          name: Get Pods
+          command: kubectl get pods
