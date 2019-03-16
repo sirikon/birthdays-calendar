@@ -9,3 +9,4 @@ mkdir ./out
 
 cat deployment.yaml | envsubst > ./out/deployment.yaml
 cat service.yaml | envsubst > ./out/service.yaml
+cat ingress.yaml | envsubst > ./out/ingress.yaml

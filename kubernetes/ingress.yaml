@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: birthdays-calendar-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: birthdays-calendar-service
+          servicePort: 80
