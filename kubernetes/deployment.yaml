@@ -31,4 +31,4 @@ spec:
         - name: SECRET
           value: "${SECRET}"
         - name: PORT
-          value: ${PORT}
+          value: "${PORT}"
