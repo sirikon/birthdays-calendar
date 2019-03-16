@@ -3,6 +3,6 @@ version: '2'
 services:
 
   web:
-    image: sirikon/birthdays-calendar:${CIRCLE_BUILD_NUM}
+    image: sirikon/birthdays-calendar:${VERSION}
     build:
       context: .

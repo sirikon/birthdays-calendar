@@ -34,5 +34,9 @@ jobs:
             kubectl config use-context k8s
       
       - run:
-          name: Get Pods
-          command: kubectl get pods
+          name: Parametrize Kubernetes files
+          command: ./scripts/gen.sh
+
+      - run:
+          name: Apply Kubernetes files
+          command: ./scripts/apply.sh

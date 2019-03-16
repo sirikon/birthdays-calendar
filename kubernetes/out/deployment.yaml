@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: birthdays-calendar-deployment
+  labels:
+    app: birthdays-calendar
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: birthdays-calendar
+
+  template:
+    metadata:
+      labels:
+        app: birthdays-calendar
+    spec:
+      containers:
+      - name: birthdays-calendar
+        image: sirikon/birthdays-calendar:
+        ports:
+        - containerPort: 80
+        env:
+        - name: CONTACTS_URL
+          value: ""
+        - name: CONTACTS_USERNAME
+          value: ""
+        - name: CONTACTS_PASSWORD
+          value: ""
+        - name: SECRET
+          value: ""
+        - name: PORT
+          value: 
