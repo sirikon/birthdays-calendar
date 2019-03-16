@@ -6,6 +6,10 @@ jobs:
       - checkout
 
       - run:
+          name: Install dependencies
+          command: sudo apt-get update -y && sudo apt-get install -y kubectl
+
+      - run:
           name: Authenticate with Docker Hub
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
