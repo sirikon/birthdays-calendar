@@ -2,6 +2,8 @@ version: 2
 jobs:
   build:
     machine: true
+    environment:
+      VERSION: $CIRCLE_BUILD_NUM
     steps:
       - checkout
 
