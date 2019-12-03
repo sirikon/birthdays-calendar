@@ -11,7 +11,7 @@ const config = {
   contactsUsername: process.env.CONTACTS_USERNAME,
   contactsPassword: process.env.CONTACTS_PASSWORD,
   secret: process.env.SECRET,
-  port: process.env.PORT
+  port: process.env.PORT || 80
 };
 
 app.get(`/${config.secret}/calendar.ics`, function (req, res) {

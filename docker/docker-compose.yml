@@ -4,14 +4,11 @@ services:
 
   web:
     image: birthdays-calendar
-    build:
-      context: .
     restart: always
+    build:
+      context: ../app
     environment:
       - CONTACTS_URL=${CONTACTS_URL}
       - CONTACTS_USERNAME=${CONTACTS_USERNAME}
       - CONTACTS_PASSWORD=${CONTACTS_PASSWORD}
       - SECRET=${SECRET}
-      - PORT=${PORT}
-    ports:
-      - 127.0.0.1:8001:80
