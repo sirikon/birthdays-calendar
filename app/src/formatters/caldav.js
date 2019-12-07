@@ -32,6 +32,13 @@ function event(r, event) {
     r.push(`SUMMARY:${event.name}`);
     r.push('TRANSP:OPAQUE');
     r.push(`UID:${event.id}`);
+
+    r.push('BEGIN:VALARM');
+    r.push('TRIGGER:-P1M');
+    r.push('ACTION:DISPLAY');
+    r.push('DESCRIPTION:Reminder');
+    r.push('END:VALARM');
+
     r.push('END:VEVENT');
 }
 
