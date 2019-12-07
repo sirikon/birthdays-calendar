@@ -53,7 +53,7 @@ function contactToEvent(contact) {
     id: `${contact.name.toLowerCase()}@birthdays.sirikon.me`,
     name: `Birthday ${contact.name}`,
     date: new Date(Date.UTC(
-      contact.birthday.year || new Date().getFullYear(),
+      contact.birthday.year || 1980,
       contact.birthday.month - 1,
       contact.birthday.day
     ))

@@ -27,7 +27,8 @@ function event(r, event) {
     r.push(`DTSTAMP:${eventDate}T100000Z`);
     r.push(`DTSTART;VALUE=DATE:${eventDate}`);
     r.push(`DTEND;VALUE=DATE:${eventDate}`);
-    r.push('SEQUENCE:0');
+    r.push('RRULE:FREQ=YEARLY');
+    r.push('SEQUENCE:1');
     r.push(`SUMMARY:${event.name}`);
     r.push('TRANSP:OPAQUE');
     r.push(`UID:${event.id}`);
