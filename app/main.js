@@ -15,25 +15,26 @@ const config = {
 };
 
 app.get(`/${config.secret}/calendar.json`, (req, res) => {
-  fetchContacts().then(contacts => {
-    res.send(contacts.filter(c => !!c.birthday));
+  getEvents().then(events => {
+    res.send(events);
   })
 })
 
 app.get(`/${config.secret}/calendar.ics`, function (req, res) {
-
-  axios.get(config.contactsUrl, {
-    auth: {
-      username: config.contactsUsername,
-      password: config.contactsPassword
-    },
-    responseType: 'text'
-  }).then((result) => {
+  getEvents().then(events => {
     res.setHeader('content-type', 'text/calendar');
-    res.send(caldav.format(carddav.parse(result.data)));
+    res.send(caldav.format(events));
   })
-
 });
+
+function getEvents() {
+  return fetchContacts()
+    .then(contacts => {
+      return contacts
+        .filter(c => !!c.birthday)
+        .map(contactToEvent);
+    })
+}
 
 function fetchContacts() {
   return axios.get(config.contactsUrl, {
@@ -45,6 +46,18 @@ function fetchContacts() {
   }).then((result) => {
     return carddav.parse(result.data);
   })
+}
+
+function contactToEvent(contact) {
+  return {
+    id: `${contact.name.toLowerCase()}@birthdays.sirikon.me`,
+    name: `Birthday ${contact.name}`,
+    date: new Date(Date.UTC(
+      contact.birthday.year || new Date().getFullYear(),
+      contact.birthday.month - 1,
+      contact.birthday.day
+    ))
+  }
 }
 
 app.listen(config.port, function () {
