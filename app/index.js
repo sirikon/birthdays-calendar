@@ -14,6 +14,12 @@ const config = {
   port: process.env.PORT || 80
 };
 
+app.get(`/${config.secret}/calendar.json`, (req, res) => {
+  fetchContacts().then(contacts => {
+    res.send(contacts.filter(c => !!c.birthday));
+  })
+})
+
 app.get(`/${config.secret}/calendar.ics`, function (req, res) {
 
   axios.get(config.contactsUrl, {
@@ -28,6 +34,18 @@ app.get(`/${config.secret}/calendar.ics`, function (req, res) {
   })
 
 });
+
+function fetchContacts() {
+  return axios.get(config.contactsUrl, {
+    auth: {
+      username: config.contactsUsername,
+      password: config.contactsPassword
+    },
+    responseType: 'text'
+  }).then((result) => {
+    return carddav.parse(result.data);
+  })
+}
 
 app.listen(config.port, function () {
   console.log('Listening on port ' + config.port);

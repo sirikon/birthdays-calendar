@@ -1,34 +1,50 @@
 module.exports = {
-    parse: function(string) {
-        string = string.replace(/\r/g, '');
-        var lines = string.split('\n');
+    parse: function(rawData) {
+        const data = rawData.replace(/\r/g, '');
+        const lines = data
+            .split('\n')
+            .map(l => l.trim())
+            .filter(l => !!l);
 
-        var birthdays = [];
-        var currentBirthday = null;
+        const contacts = [];
+        let currentContact = null;
 
         lines.forEach((line) => {
             if (line === "BEGIN:VCARD") {
-                currentBirthday = { valid: false };
-                return;
-            }
-            if (line.indexOf('FN:') === 0) {
-                currentBirthday.name = line.split(':')[1];
-                return;
-            }
-            if (line.indexOf('BDAY:') === 0) {
-                currentBirthday.date = line.split(':')[1];
-                currentBirthday.valid = true;
+                currentContact = {};
                 return;
             }
             if (line === 'END:VCARD') {
-                if (currentBirthday.valid) {
-                    delete currentBirthday.valid;
-                    birthdays.push(currentBirthday);
-                    currentBirthday = null;
-                }
+                contacts.push(currentContact);
+                currentContact = null;
+                return;
+            }
+
+            if (line.indexOf('FN:') === 0) {
+                currentContact.name = line.split(':')[1];
+                return;
+            }
+            if (line.indexOf('BDAY:') === 0) {
+                const date = line.split(':')[1];
+                const dateParts = date.split('-');
+                currentContact.birthday = {
+                    year: parseInt(dateParts[0]),
+                    month: parseInt(dateParts[1]),
+                    day: parseInt(dateParts[2])
+                };
+                return;
+            }
+            if (line.indexOf('BDAY;X-APPLE-OMIT-YEAR') === 0) {
+                const date = line.split(':')[1];
+                const dateParts = date.split('-');
+                currentContact.birthday = {
+                    month: parseInt(dateParts[1]),
+                    day: parseInt(dateParts[2])
+                };
+                return;
             }
         })
 
-        return birthdays;
+        return contacts;
     }
 }
