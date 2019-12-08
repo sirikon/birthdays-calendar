@@ -1,5 +1,3 @@
-const slugify = require('slugify');
-
 function formatCalendar(events) {
     const r = [];
     calendar(r, () => {
