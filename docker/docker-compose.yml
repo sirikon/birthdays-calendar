@@ -7,8 +7,3 @@ services:
     restart: always
     build:
       context: ../app
-    environment:
-      - CONTACTS_URL=${CONTACTS_URL}
-      - CONTACTS_USERNAME=${CONTACTS_USERNAME}
-      - CONTACTS_PASSWORD=${CONTACTS_PASSWORD}
-      - SECRET=${SECRET}

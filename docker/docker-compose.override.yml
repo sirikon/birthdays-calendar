@@ -5,3 +5,8 @@ services:
   web:
     ports:
       - 127.0.0.1:8001:80
+    environment:
+      - CONTACTS_URL=${CONTACTS_URL}
+      - CONTACTS_USERNAME=${CONTACTS_USERNAME}
+      - CONTACTS_PASSWORD=${CONTACTS_PASSWORD}
+      - SECRET=${SECRET}
